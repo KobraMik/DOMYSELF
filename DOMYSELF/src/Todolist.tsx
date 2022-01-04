@@ -11,19 +11,22 @@ type propsType = {
     title: string;
     tasks: Array<taskType>
     addTask: (inputTitle: string) => void
+    removeTasks: (id: string) => void
+    wantToChange: (id: string, checked: boolean) => void
 }
 
 export function Todolist(props: propsType) {
     let [inputTitle, setInputTitle] = useState('')
 
     function addTask() {
-        props.addTask(inputTitle)
-        setInputTitle('')
+        props.addTask(inputTitle);
+        setInputTitle('');
     }
 
     function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
         setInputTitle(e.currentTarget.value)
     }
+
 
     return (
         <div className="App">
@@ -33,7 +36,7 @@ export function Todolist(props: propsType) {
                     <input onChange={onChangeHandler}
                            onKeyPress={(e) => {
                                if (e.key === 'Enter') {
-                                       addTask()
+                                   addTask()
                                }
                            }}
                     />
@@ -43,10 +46,22 @@ export function Todolist(props: propsType) {
                 </div>
                 <ul>
                     {props.tasks.map(t => {
+
+                        function removeTasks() {
+                            props.removeTasks(t.id)
+                        }
+
+                        function wantToChange() {
+                            props.wantToChange(t.id, t.checked)
+                        }
+
                         return <li key={t.id}>
                             <input type="checkbox"
-                                   checked={t.checked}/>
+                                   checked={t.checked}
+                                   onChange={wantToChange}
+                            />
                             <span>{t.title}</span>
+                            <button onClick={removeTasks}>X</button>
                         </li>
                     })}
                 </ul>
