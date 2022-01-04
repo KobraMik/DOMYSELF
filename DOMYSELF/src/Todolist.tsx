@@ -16,6 +16,7 @@ type propsType = {
     wantToChange: (id: string, checked: boolean) => void
     filter: filterType
     setFilter: (value: filterType) => void
+    id: string
 }
 
 export function Todolist(props: propsType) {
