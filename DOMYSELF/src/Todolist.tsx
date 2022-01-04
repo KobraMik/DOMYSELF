@@ -20,34 +20,41 @@ type propsType = {
 
 export function Todolist(props: propsType) {
     let [inputTitle, setInputTitle] = useState('')
+    let [error, setError] = useState('')
 
     function addTask() {
-        props.addTask(inputTitle);
-        setInputTitle('');
+        if (inputTitle.trim() !== '') {
+            props.addTask(inputTitle);
+            setInputTitle('');
+        } else {
+            setError('Field is required');
+        }
     }
 
     function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
         setInputTitle(e.currentTarget.value)
     }
 
-    function onChangeButtonsHandler (value: filterType){
-        props.setFilter (value)
+    function onChangeButtonsHandler(value: filterType) {
+        props.setFilter(value)
     }
+
     return (
         <div className="App">
             <div>
                 <h3>{props.title}</h3>
                 <div>
                     <input onChange={onChangeHandler}
+                           value={inputTitle}
                            onKeyPress={(e) => {
                                if (e.key === 'Enter') {
                                    addTask()
                                }
                            }}
+                           className={error ? 'error' : ''}
                     />
-                    <button onClick={addTask}
-                    >+
-                    </button>
+                    <button onClick={addTask}>+</button>
+                    {error && <div className='error-message'> {error} </div>}
                 </div>
                 <ul>
                     {props.tasks.map(t => {
@@ -67,13 +74,20 @@ export function Todolist(props: propsType) {
                             />
                             <span>{t.title}</span>
                             <button onClick={removeTasks}>X</button>
+
                         </li>
                     })}
                 </ul>
                 <div>
-                    <button onClick={()=>onChangeButtonsHandler('All')}>All</button>
-                    <button onClick={()=>onChangeButtonsHandler('Active')}>Active</button>
-                    <button onClick={()=>onChangeButtonsHandler('Completed')}>Completed</button>
+                    <button
+                        className={props.filter === 'All' ? "active-filter" : ""}
+                        onClick={() => onChangeButtonsHandler('All')}>All</button>
+                    <button
+                        className={props.filter === 'Active' ? "active-filter" : ""}
+                        onClick={() => onChangeButtonsHandler('Active')}>Active</button>
+                    <button
+                        className={props.filter === 'Completed' ? "active-filter" : ""}
+                        onClick={() => onChangeButtonsHandler('Completed')}>Completed</button>
                 </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ function App() {
         newArrayTasks = tasks.filter(f => f.checked)
     }
     if (filter === 'Completed') {
-        newArrayTasks=tasks.filter(f => !f.checked)
+        newArrayTasks = tasks.filter(f => !f.checked)
     }
 
 
