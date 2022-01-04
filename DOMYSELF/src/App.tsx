@@ -3,6 +3,8 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 
+export type filterType = 'All' | 'Active' | 'Completed'
+
 function App() {
     let [tasks, setTasks] = useState([
         {id: v1(), title: "HTML&CSS", checked: true},
@@ -28,13 +30,25 @@ function App() {
         setTasks([...tasks])
     }
 
+    let [filter, setFilter] = useState<filterType>('All')
+    let newArrayTasks = tasks;
+    if (filter === 'Active') {
+        newArrayTasks = tasks.filter(f => f.checked)
+    }
+    if (filter === 'Completed') {
+        newArrayTasks=tasks.filter(f => !f.checked)
+    }
+
+
     return (
         <div className="App">
             <Todolist title="What to learn"
-                      tasks={tasks}
+                      tasks={newArrayTasks}
                       addTask={addTask}
                       removeTasks={removeTasks}
                       wantToChange={wantToChange}
+                      filter={filter}
+                      setFilter={setFilter}
             />
         </div>
     );

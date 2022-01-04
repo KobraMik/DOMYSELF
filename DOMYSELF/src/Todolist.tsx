@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import './App.css';
+import {filterType} from "./App";
 
 type taskType = {
     id: string;
@@ -13,6 +14,8 @@ type propsType = {
     addTask: (inputTitle: string) => void
     removeTasks: (id: string) => void
     wantToChange: (id: string, checked: boolean) => void
+    filter: filterType
+    setFilter: (value: filterType) => void
 }
 
 export function Todolist(props: propsType) {
@@ -27,7 +30,9 @@ export function Todolist(props: propsType) {
         setInputTitle(e.currentTarget.value)
     }
 
-
+    function onChangeButtonsHandler (value: filterType){
+        props.setFilter (value)
+    }
     return (
         <div className="App">
             <div>
@@ -66,9 +71,9 @@ export function Todolist(props: propsType) {
                     })}
                 </ul>
                 <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
+                    <button onClick={()=>onChangeButtonsHandler('All')}>All</button>
+                    <button onClick={()=>onChangeButtonsHandler('Active')}>Active</button>
+                    <button onClick={()=>onChangeButtonsHandler('Completed')}>Completed</button>
                 </div>
             </div>
         </div>
