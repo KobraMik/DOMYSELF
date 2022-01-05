@@ -11,11 +11,11 @@ type taskType = {
 type propsType = {
     title: string;
     tasks: Array<taskType>
-    addTask: (inputTitle: string) => void
+    addTask: (inputTitle: string, id: string) => void
     removeTasks: (id: string) => void
     wantToChange: (id: string, checked: boolean) => void
     filter: filterType
-    setFilter: (value: filterType) => void
+    changeFilter: (value: filterType, id: string) => void
     id: string
 }
 
@@ -25,7 +25,7 @@ export function Todolist(props: propsType) {
 
     function addTask() {
         if (inputTitle.trim() !== '') {
-            props.addTask(inputTitle);
+            props.addTask(inputTitle, props.id);
             setInputTitle('');
         } else {
             setError('Field is required');
@@ -36,8 +36,8 @@ export function Todolist(props: propsType) {
         setInputTitle(e.currentTarget.value)
     }
 
-    function onChangeButtonsHandler(value: filterType) {
-        props.setFilter(value)
+    function onChangeButtonsHandler(value: filterType, id: string) {
+        props.changeFilter(value, id)
     }
 
     return (
@@ -82,13 +82,13 @@ export function Todolist(props: propsType) {
                 <div>
                     <button
                         className={props.filter === 'All' ? "active-filter" : ""}
-                        onClick={() => onChangeButtonsHandler('All')}>All</button>
+                        onClick={() => onChangeButtonsHandler('All', props.id)}>All</button>
                     <button
                         className={props.filter === 'Active' ? "active-filter" : ""}
-                        onClick={() => onChangeButtonsHandler('Active')}>Active</button>
+                        onClick={() => onChangeButtonsHandler('Active', props.id)}>Active</button>
                     <button
                         className={props.filter === 'Completed' ? "active-filter" : ""}
-                        onClick={() => onChangeButtonsHandler('Completed')}>Completed</button>
+                        onClick={() => onChangeButtonsHandler('Completed', props.id)}>Completed</button>
                 </div>
             </div>
         </div>
