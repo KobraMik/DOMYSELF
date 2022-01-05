@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './App.css';
 import {filterType} from "./App";
 
-type taskType = {
+export type taskType = {
     id: string;
     title: string;
     checked: boolean;
@@ -17,6 +17,7 @@ type propsType = {
     filter: filterType
     changeFilter: (value: filterType, id: string) => void
     id: string
+    removeTodolist: (id: string) => void
 }
 
 export function Todolist(props: propsType) {
@@ -40,10 +41,18 @@ export function Todolist(props: propsType) {
         props.changeFilter(value, id)
     }
 
+    function removeTodolist(){
+        props.removeTodolist(props.id)
+    }
+
     return (
         <div className="App">
             <div>
-                <h3>{props.title}</h3>
+                <div>
+                    <h3>{props.title}
+                        <button onClick={removeTodolist}>X</button>
+                    </h3>
+                </div>
                 <div>
                     <input onChange={onChangeHandler}
                            value={inputTitle}
