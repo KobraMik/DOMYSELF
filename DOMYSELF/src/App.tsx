@@ -18,10 +18,16 @@ function App() {
         {id: v1(), title: "React2", checked: false},
     ])
 
+    function addTask (input: string) {
+        let task = {id: v1(), title: input, checked: false}
+        setTasks([task, ...tasks])
+    }
+
     return (
         <div className="App">
             <Todolist name={'What to learn'}
                       tasks={tasks}
+                      addTask={addTask}
             />
         </div>
     )

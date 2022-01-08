@@ -10,17 +10,33 @@ type tasksType = {
 type propsType = {
     name: string
     tasks: Array<tasksType>
+    addTask: (input: string) => void
 }
 
 export function Todolist(props: propsType) {
+    let [input, setInput] = useState('')
+
+    function addTask () {
+        if(input.trim() !== '') {
+            props.addTask(input)
+        }
+        setInput('')
+    }
+    function onChangeHandler (e: React.ChangeEvent<HTMLInputElement>) {
+        setInput(e.currentTarget.value)
+    }
     return (
         <div className="App">
-
             <div>
                 <h3>{props.name}</h3>
                 <div>
-                    <input/>
-                    <button>+</button>
+                    <input value={input}
+                           onChange={onChangeHandler}
+                           onKeyPress={(e)=>{if(e.key === 'Enter') {
+                               addTask()
+                           }}}
+                    />
+                    <button onClick={addTask}>+</button>
                 </div>
                 <ul>
                     {props.tasks.map(m =>
@@ -29,7 +45,7 @@ export function Todolist(props: propsType) {
                                    checked={m.checked}
                             />
                             <span>{m.title}</span>
-                            <button>X</button>
+                            <button onClick={()=>{}}>X</button>
                         </li>
                     )}
                 </ul>
