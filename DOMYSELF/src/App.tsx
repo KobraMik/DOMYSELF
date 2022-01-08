@@ -18,11 +18,11 @@ function App() {
         {id: v1(), title: "React2", checked: false},
     ])
 
-
-
     return (
         <div className="App">
-            return <Todolist />
+            <Todolist name={'What to learn'}
+                      tasks={tasks}
+            />
         </div>
     )
 }
